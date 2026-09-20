@@ -1,3 +1,17 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION['logged_in_user']) && isset($_COOKIE['remember_user'])) {
+        $email = $_COOKIE['remember_user'];
+        if (isset($_SESSION['users'][$email])) {
+            $_SESSION['logged_in_user'] = $_SESSION['users'][$email];
+        }
+    }
+    if (isset($_SESSION['logged_in_user'])) {
+        header("Location: index.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,14 +27,14 @@
 
         <!-- TODO: When user clicks login, form will collect data in input tags and send the data to actions/doLogin.php using POST request method. -->
         <!-- CODE STARTS HERE -->
-        <form>
+        <form method="post" action="actions/doLogin.php">
             <div>
                 <label for="user-email">E-mail Address</label>
-                <input type="text" id="user-email">
+                <input type="text" id="user-email" name="user-email">
             </div>
             <div>
                 <label for="user-password">Password</label>
-                <input type="password" id="user-password">
+                <input type="password" id="user-password" name="user-password">
             </div>
             <div>
                 <input type="checkbox" name="remember-me" id="remember-me"> Remember me
@@ -32,7 +46,12 @@
             <!-- TODO: Print error message, if exists, that comes from actions/doLogin.php. -->
             <!-- CODE STARTS HERE -->
             <div id="error-message">
-
+            <?php
+                if (isset($_SESSION['login_error'])) {
+                    echo "<p>" . $_SESSION['login_error'] . "</p>";
+                }
+                unset($_SESSION['login_error']);
+            ?>
             </div>
             <!-- CODE ENDS HERE -->
 

@@ -7,3 +7,11 @@
 // 3. Redirect user to login.php page
 
 // CODE STARTS HERE
+    session_start();
+
+    unset($_SESSION['logged_in_user']);
+    setcookie('remember_user', '', time() - 3600, "/");
+    session_regenerate_id(true);
+    header("Location: ../login.php");
+    exit();
+?>

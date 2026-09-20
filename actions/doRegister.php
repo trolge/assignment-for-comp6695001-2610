@@ -11,3 +11,53 @@
 // 3. Redirect user to login.php page to log in
 
 // CODE STARTS HERE
+    session_start();
+
+    $register_error = [];
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $username = $_POST['user-name'] ?? '';
+        $email = $_POST['user-email'] ?? '';
+        $gender = $_POST['user-gender'] ?? ''; 
+        $password = $_POST['user-password'] ?? '';
+
+        //VALIDATION
+        if (empty(trim($username))) {
+            $register_error[] = "User name cannot be empty.";
+        } 
+        if (!preg_match('/@(gmail\.com|binus\.ac\.id)$/i', $email)) {
+            $register_error[] = "Email address must end with @gmail.com or @binus.ac.id.";
+        } 
+        if (!in_array($gender, ["Male", "Female", "Prefer not to say"])) {
+            $register_error[] = "Gender must be Male, Female, or Prefer not to say.";
+        } 
+        if (strlen($password) < 8 ||
+            !preg_match('/[A-Z]/', $password) ||
+            !preg_match('/[a-z]/', $password) ||
+            !preg_match('/[0-9]/', $password) ||
+            !preg_match('/[^A-Za-z0-9]/', $password)) {
+            $register_error[] = "Password must be at least 8 characters, 
+            also at least contains 1 upper case character, 
+            1 lowercase character, 1 number, and 1 symbol";
+        } 
+        //SUCCESSFUL REGISTRATION
+        if (empty($register_error))  {
+            if (!isset($_SESSION['users'])) {
+                $_SESSION['users'] = [];
+            }
+            $_SESSION['users'][$email] = [
+                'username' => $username,
+                'email' => $email,
+                'gender' => $gender,
+                'password' => $password
+            ];
+            header("Location: ../login.php");
+            exit();
+        } else {
+            $_SESSION['register_error'] = $register_error;
+            header('Location: ../register.php');
+            exit();
+        }
+    }
+?>
+

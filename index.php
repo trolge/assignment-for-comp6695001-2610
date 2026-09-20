@@ -1,3 +1,13 @@
+<?php
+    session_start();
+
+    if (empty($_SESSION['logged_in_user']) && isset($_COOKIE['remember_user'])) {
+        $email = $_COOKIE['remember_user'];
+        if (isset($_SESSION['users'][$email])) {
+            $_SESSION['logged_in_user'] = $_SESSION['users'][$email];
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +22,11 @@
 
     <!-- TODO: Print logged in user name in "user-name" span here -->
     <!-- CODE STARTS HERE -->
+    <?php
+        $username = htmlspecialchars($_SESSION['logged_in_user']['username'] ?? '', ENT_QUOTES, 'UTF-8');
+    ?>
     <div>
-        Welcome, <span id="user-name">{enter user name here}</span>
+        Welcome, <span id="user-name"><?= $username ?></span>
     </div>
     <!-- CODE ENDS HERE -->
 
