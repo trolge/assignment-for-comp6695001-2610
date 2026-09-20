@@ -25,7 +25,7 @@
         if (empty(trim($username))) {
             $register_error[] = "User name cannot be empty.";
         } 
-        if (!preg_match('/@(gmail\.com|binus\.ac\.id)$/i', $email)) {
+        if (!preg_match('/^[a-zA-Z0-9._%+-]+@(binus\.ac\.id|gmail\.com)$/i', $email)) {
             $register_error[] = "Email address must end with @gmail.com or @binus.ac.id.";
         } 
         if (!in_array($gender, ["Male", "Female", "Prefer not to say"])) {
