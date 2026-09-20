@@ -23,7 +23,7 @@
     <!-- TODO: Print logged in user name in "user-name" span here -->
     <!-- CODE STARTS HERE -->
     <?php
-        $username = htmlspecialchars($_SESSION['logged_in_user']['username'] ?? '', ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars($_SESSION['logged_in_user']['username']);
     ?>
     <div>
         Welcome, <span id="user-name"><?= $username ?></span>

@@ -21,7 +21,6 @@
         $gender = $_POST['user-gender'] ?? ''; 
         $password = $_POST['user-password'] ?? '';
 
-        //VALIDATION
         if (empty(trim($username))) {
             $register_error[] = "User name cannot be empty.";
         } 
@@ -40,7 +39,6 @@
             also at least contains 1 upper case character, 
             1 lowercase character, 1 number, and 1 symbol";
         } 
-        //SUCCESSFUL REGISTRATION
         if (empty($register_error))  {
             if (!isset($_SESSION['users'])) {
                 $_SESSION['users'] = [];

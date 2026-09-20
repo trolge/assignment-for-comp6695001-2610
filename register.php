@@ -56,7 +56,7 @@
             <?php
                 if (!empty($_SESSION['register_error'])) {
                     foreach ($_SESSION['register_error'] as $error) {
-                        echo "<p>$error</p>";
+                        echo "<p> $error </p>";
                     }
                     unset($_SESSION['register_error']);
                 }
