@@ -14,7 +14,12 @@
     session_start();
 
     unset($_SESSION['logged_in_user']);
-    setcookie('remember_user', '', time() - 3600, "/");
+    setcookie('remember_user', '', [
+        'expires' => time() - 3600,
+        'path' => '/',
+        'httponly' => true,
+        'secure' => true
+    ]);
     session_regenerate_id(true);
     header("Location: ../login.php");
     exit();

@@ -28,7 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         session_regenerate_id(true);   
         $_SESSION['logged_in_user'] = $_SESSION['users'][$email];
         if ($remember_me) {
-            setcookie('remember_user', $email, time() + (7 * 24 * 60 * 60), "/", ['httponly' => true]);
+            setcookie('remember_user', $email, [
+                'expires' => time() + (7 * 24 * 60 * 60),
+                'path' => '/',
+                'httponly' => true,
+                'secure' => true
+            ]);
         }
         header("Location: ../index.php");
         exit();
