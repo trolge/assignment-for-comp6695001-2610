@@ -7,6 +7,10 @@
 // 3. Redirect user to login.php page
 
 // CODE STARTS HERE
+    session_set_cookie_params([
+        'httponly' => true,
+        'secure' => true
+    ]);
     session_start();
 
     unset($_SESSION['logged_in_user']);

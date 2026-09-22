@@ -1,4 +1,8 @@
 <?php
+    session_set_cookie_params([
+        'httponly' => true,
+        'secure' => true
+    ]);
     session_start();
 
     if (empty($_SESSION['logged_in_user']) && isset($_COOKIE['remember_user'])) {

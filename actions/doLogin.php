@@ -1,4 +1,9 @@
 <?php
+session_set_cookie_params([
+        'httponly' => true,
+        'secure' => true
+    ]);
+    
 session_start();
 
 // TODO: Check sent user credentials from login.php page and logged them into the web application
@@ -23,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         session_regenerate_id(true);   
         $_SESSION['logged_in_user'] = $_SESSION['users'][$email];
         if ($remember_me) {
-            setcookie('remember_user', $email, time() + (7 * 24 * 60 * 60), "/");
+            setcookie('remember_user', $email, time() + (7 * 24 * 60 * 60), "/", ['httponly' => true]);
         }
         header("Location: ../index.php");
         exit();
